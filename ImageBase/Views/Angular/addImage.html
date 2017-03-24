@@ -1,0 +1,11 @@
+﻿
+<h1>Add Image</h1>
+
+<div>
+    <img class="thumb" ng-src="{{imageToAdd}}" />
+</div>
+<div>
+    <input type='file' ng-model-instant onchange="angular.element(this).scope().imageUpload(event)" />
+    <button ng-click="imageAddSubmit()" class="btn btn-default">Add</button>
+</div>
+

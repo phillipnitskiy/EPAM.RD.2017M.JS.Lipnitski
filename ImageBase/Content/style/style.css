@@ -1,0 +1,18 @@
+﻿.gallery_item {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+i.glyphicon-thumbs-up {
+    color: #1abc9c;
+    display: inline;
+    font-size: 1.125em;
+    cursor: pointer;
+}
+
+i.glyphicon-thumbs-down {
+    color: #e74c3c;
+    display: inline;
+    font-size: 1.125em;
+    cursor: pointer;
+}
