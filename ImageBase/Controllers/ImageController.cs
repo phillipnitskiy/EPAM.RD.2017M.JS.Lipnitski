@@ -80,5 +80,18 @@ namespace ImageBase.Controllers
             return Path.Combine(serverPath, "Content", "img", fileName);
         }
 
+        public JsonResult DeleteImage(int imageId)
+        {
+            var imageToRemove = db.Images.FirstOrDefault(i => i.Id == imageId);
+
+            if (imageToRemove != null)
+            {
+                db.Images.Remove(imageToRemove);
+                db.SaveChanges();
+            }
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

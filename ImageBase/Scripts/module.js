@@ -50,6 +50,12 @@
 
             };
 
+            $scope.deleteImage = function (imageId) {
+                dataCenter.deleteImage(imageId);
+                
+                $scope.currentAlbum.Images = $scope.currentAlbum.Images.filter(i => i.Id !== imageId);
+            }
+
             $scope.extensionFilter = function (value, index, array) {
                 for (var i = 0; i < $scope.albumExtensions.length; i++) {
                     if ($scope.albumExtensions[i].name == value.Extension) {
@@ -132,8 +138,22 @@
 
         };
 
-        function removeImage() {
+        function deleteImage(imageId) {
 
+                var request = {
+                    method: 'POST',
+                    url: '/Image/DeleteImage',
+                    data: { imageId: imageId }
+                };
+
+                $http(request)
+                    .then(function (response) {
+                        alert('success');
+                    },
+                    function (response) {
+                        alert('fail');
+                    });
+                
         };
 
         return {
@@ -141,7 +161,7 @@
             getAlbum: getAlbum,
             getAlbumNames: getAlbumNames,
             addImage: addImage,
-            removeImage: removeImage
+            deleteImage: deleteImage
         }
     }])
 
