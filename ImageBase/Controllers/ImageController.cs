@@ -57,19 +57,35 @@ namespace ImageBase.Controllers
             return Json(albums, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult AddImageAjax(string fileName, string data)
+        public JsonResult AddImageAjax(string name, string src, int albumId, int rating, string extension)
         {
-            var dataIndex = data.IndexOf("base64", StringComparison.Ordinal) + 7;
-            var cleareData = data.Substring(dataIndex);
+            var dataIndex = src.IndexOf("base64", StringComparison.Ordinal) + 7;
+            var cleareData = src.Substring(dataIndex);
             var fileData = Convert.FromBase64String(cleareData);
             var bytes = fileData.ToArray();
 
-            var path = GetPathToImg(fileName);
+            var path = GetPathToImg($"{name}.{extension}");
             using (var fileStream = System.IO.File.Create(path))
             {
                 fileStream.Write(bytes, 0, bytes.Length);
                 fileStream.Close();
             }
+            var album = db.Albums.First(a => a.Id == albumId);
+
+            var newImage = new ImageEntity
+            {
+                Album = album,
+                Name = name,
+                Src = $"{name}.{extension}",
+                Extension = extension,
+                IsApproved = true,
+                PublicationDate = DateTime.Now,
+                RatingSum = rating,
+                RatersCount = 1
+            };
+
+            db.Images.Add(newImage);
+            db.SaveChanges();
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }

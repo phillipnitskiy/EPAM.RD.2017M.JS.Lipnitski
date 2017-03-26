@@ -78,8 +78,26 @@
 
     .controller('AddImageController', ['$scope', 'dataCenter', function ($scope, dataCenter) {
 
+        $scope.imageToAdd = {
+            Name: "Name",
+            Src: null,
+            Rating: 0,
+            Extension: null
+        };
+
+        $scope.albums = [];
+
+        dataCenter.getAlbumNames().then(function (response) {
+            $scope.albums = response.data;
+            $scope.albums.splice(0, 1);
+
+            $scope.imageToAdd.Album = $scope.albums[0];
+        });
+
         $scope.imageUpload = function (event) {
             var file = event.target.files[0];
+            $scope.imageToAdd.Extension = file.name.split('.').pop();
+
             var reader = new FileReader();
             reader.onload = $scope.imageIsLoaded;
             reader.readAsDataURL(file);          
@@ -87,31 +105,27 @@
 
         $scope.imageIsLoaded = function (e) {
             $scope.$apply(function () {
-                $scope.imageToAdd = e.target.result;
+                $scope.imageToAdd.Src = e.target.result;
             });
         }
 
-        $scope.imageAddSubmit = function (e) {
-            $.ajax({
-                url: "/Image/AddImageAjax",
-                type: 'POST',
-                data: {
-                    fileName: fileInfo.filename,
-                    data: fileInfo.data
-                },
-                success: function (data) {
-                    $(submitId).prop('disabled', false);
-                    $(previewId).attr("src", "");
-                    $(fileId).val("");
+        $scope.imageAddSubmit = function () {
+            //$.ajax({
+            //    url: "/Image/AddImageAjax",
+            //    type: 'POST',
+            //    data: {
+            //        fileName: fileInfo.filename,
+            //        data: fileInfo.data
+            //    },
+            //    success: function (data) {
 
-                    $(messageClass).hide();
-                    $(messageClass).text('Upload completed');
-                    $(messageClass).show(500);
-                    $(messageClass).hide(2000);
-                }
-            });
+            //    }
 
-            e.preventDefault();
+
+            //});
+
+            dataCenter.addImage($scope.imageToAdd);
+            
         };
 
     }])
@@ -142,8 +156,32 @@
             return response;
         };
 
-        function addImage() {
-
+        function addImage(imageToAdd) {
+            var response = {
+                method: "POST",
+                url: "/Image/AddImageAjax",
+                data: {
+                    src: imageToAdd.Src,
+                    name: imageToAdd.Name,
+                    albumId: imageToAdd.Album.Id,
+                    rating: imageToAdd.Rating,
+                    extension: imageToAdd.Extension
+                },
+                headers: { 'Accept': 'application/json' }
+            }
+            $http(response).then(function (response) {
+                alert(response.data);
+            });
+            //var response = {
+            //    method: "POST",
+            //    url: "/Home/AddImage/",
+            //    data: {
+            //        imageData: imageData
+            //    }
+            //}
+            //$http(response).then(function (response) {
+            //    alert(response.data);
+            //});
         };
 
         function deleteImage(imageId) {

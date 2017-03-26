@@ -4,21 +4,6 @@
 }
 
 
-i.glyphicon-thumbs-up {
-    color: #1abc9c;
-    display: inline;
-    font-size: 1.125em;
-    cursor: pointer;
-}
-
-i.glyphicon-thumbs-down {
-    color: #e74c3c;
-    display: inline;
-    font-size: 1.125em;
-    cursor: pointer;
-}
-
-
 /*.stars {
     width: 270px;
     display: inline-block;
@@ -35,6 +20,11 @@ label.star {
     color: #444;
 }
 
+label.star-lg {
+    padding: 5px;
+    font-size: 34px;
+}
+
 label.star-nofloat {
     float: none;
 }
@@ -42,6 +32,7 @@ label.star-nofloat {
 input.star:checked ~ label.star:before {
     content: '\f005';
     color: #FD4;
+    transition: all .25s;
 }
 
 label.star-checked {

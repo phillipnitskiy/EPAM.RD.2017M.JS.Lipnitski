@@ -1,11 +1,69 @@
-﻿
-<h1>Add Image</h1>
+﻿<div ng-controller="AddImageController" class="container">
 
-<div>
-    <img class="" ng-src="{{imageToAdd}}" />
-</div>
-<div>
-    <input type="file" ng-model-instant onchange="angular.element(this).scope().imageUpload(event)" />
-    <button ng-click="imageAddSubmit()" class="btn btn-default">Add</button>
-</div>
+    <div class="row">
+        <div class="col-md-offset-3 col-md-9">
+            <h1>Add Image</h1>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="gallery_item col-md-offset-2 col-sm-offset-2 col-md-4 col-sm-4 col-xs-6">
+            
+            <!--album Names-->
+            <div class="form-group">
+                <label for="imageAlbum">Album:</label>
+                <select ng-model="imageToAdd.Album"
+                        ng-options="album.Name for album in albums"
+                        id="imageAlbum"
+                        class="form-control input-sm"></select>
+            </div>
+
+            <div class="form-group">
+                <label for="imageName">Name:</label>
+                <input ng-model="imageToAdd.Name" type="text" class="form-control input-sm" id="imageName">
+            </div>
+
+            <div class="form-group col-md-10 col-sm-12">
+                <input ng-model="imageToAdd.Rating" class="star" id="star-5" value="5" type="radio" name="star"/>
+                <label class="star star-lg" for="star-5"></label>
+
+                <input ng-model="imageToAdd.Rating" class="star" id="star-4" value="4" type="radio" name="star"/>
+                <label class="star star-lg" for="star-4"></label>
+
+                <input ng-model="imageToAdd.Rating" class="star" id="star-3" value="3" type="radio" name="star"/>
+                <label class="star star-lg" for="star-3"></label>
+
+                <input ng-model="imageToAdd.Rating" class="star" id="star-2" value="2" type="radio" name="star"/>
+                <label class="star star-lg" for="star-2"></label>
+
+                <input ng-model="imageToAdd.Rating" class="star" id="star-1" value="1" type="radio" name="star"/>
+                <label class="star star-lg" for="star-1"></label>
+            </div>
+
+            <div class="form-group">
+                <input type="file" ng-model-instant onchange="angular.element(this).scope().imageUpload(event)"/>
+            </div>
+
+            <div class="form-group">
+                <button ng-click="imageAddSubmit()" class="btn btn-sm btn-block btn-success">Add</button>
+            </div>
+        </div>
+
+        <div class="gallery_item col-md-4 col-sm-4 col-xs-6">
+            <h4>{{imageToAdd.Name}}</h4>
+            <img ng-src="{{imageToAdd.Src}}" class="img-responsive">
+            <div class="col-md-6">##.##.#### ##:##:##</div>
+
+            <div class="col-md-6">
+                <span class="pull-right">
+                    <label class="star star-checked"></label>
+                    <span>{{imageToAdd.Rating}}</span>
+                </span>
+            </div>
+
+            <button class="btn btn-warning btn-block btn-sm">Delete</button>
+        </div>
+
+    </div>
+
+</div>
