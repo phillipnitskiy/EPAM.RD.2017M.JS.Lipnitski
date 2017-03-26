@@ -10,7 +10,7 @@ namespace ImageBase.Models
         public string Src { get; set; }
         public string Extension { get; set; }
 
-        public int Rating { get; set; }
+        public string Rating { get; set; }
         public string PublicationDate { get; set; }
 
         public bool IsApproved { get; set; }

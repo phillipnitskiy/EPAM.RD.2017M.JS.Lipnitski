@@ -3,6 +3,7 @@
     margin-bottom: 15px;
 }
 
+
 i.glyphicon-thumbs-up {
     color: #1abc9c;
     display: inline;
@@ -15,4 +16,40 @@ i.glyphicon-thumbs-down {
     display: inline;
     font-size: 1.125em;
     cursor: pointer;
+}
+
+
+/*.stars {
+    width: 270px;
+    display: inline-block;
+}*/
+
+input.star {
+    display: none;
+}
+
+label.star {
+    float: right;
+    padding: 2px;
+    font-size: 14px;
+    color: #444;
+}
+
+label.star-nofloat {
+    float: none;
+}
+
+input.star:checked ~ label.star:before {
+    content: '\f005';
+    color: #FD4;
+}
+
+label.star-checked {
+    content: '\f005';
+    color: #FD4;
+}
+
+label.star:before {
+    content: '\f006';
+    font-family: FontAwesome;
 }

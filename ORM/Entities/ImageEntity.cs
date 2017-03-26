@@ -14,7 +14,9 @@ namespace ORM.Entities
         public string Src { get; set; }
         public string Extension { get; set; }
 
-        public int Rating { get; set; }
+        public int RatingSum { get; set; }
+        public int RatersCount { get; set; }
+
         public DateTime PublicationDate { get; set; }
 
         public bool IsApproved { get; set; }

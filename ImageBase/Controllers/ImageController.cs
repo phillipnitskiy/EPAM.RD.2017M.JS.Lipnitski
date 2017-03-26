@@ -15,7 +15,7 @@ namespace ImageBase.Controllers
     {
         private GalleryContext db = new GalleryContext();
 
-        public JsonResult GetAllImages()
+        public JsonResult GetAll()
         {
             var images = db.Images.ToList().Select(i => i.ToImage()).ToList();
             images.ForEach(i => i.Src = Url.Content("~/Content/img/" + i.Src));
@@ -80,7 +80,7 @@ namespace ImageBase.Controllers
             return Path.Combine(serverPath, "Content", "img", fileName);
         }
 
-        public JsonResult DeleteImage(int imageId)
+        public JsonResult Delete(int imageId)
         {
             var imageToRemove = db.Images.FirstOrDefault(i => i.Id == imageId);
 
@@ -93,5 +93,20 @@ namespace ImageBase.Controllers
             return Json(true, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult Rate(int imageId, int rating)
+        {
+            var imageToUpdate = db.Images.FirstOrDefault(i => i.Id == imageId);
+
+            if (imageToUpdate == null)
+                return Json(true, JsonRequestBehavior.AllowGet);
+
+            imageToUpdate.RatingSum += rating;
+            imageToUpdate.RatersCount += 1;
+            db.SaveChanges();
+
+            var newRating = ((double)imageToUpdate.RatingSum / imageToUpdate.RatersCount).ToString("N1");
+
+            return Json(new {Rating = newRating}, JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -21,7 +21,9 @@ namespace ORM.Configurations
                 .IsRequired()
                 .HasMaxLength(5);
 
-            Property(i => i.Rating)
+            Property(i => i.RatersCount)
+                .IsRequired();
+            Property(i => i.RatingSum)
                 .IsRequired();
             Property(i => i.PublicationDate)
                 .IsRequired();

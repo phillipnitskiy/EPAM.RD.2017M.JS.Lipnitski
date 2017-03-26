@@ -56,6 +56,14 @@
                 $scope.currentAlbum.Images = $scope.currentAlbum.Images.filter(i => i.Id !== imageId);
             }
 
+            $scope.rateImage = function (imageIndex, rating) {
+                var imageId = $scope.currentAlbum.Images[imageIndex].Id;
+                dataCenter.rateImage(imageId, rating).then(function (response) {
+                    $scope.currentAlbum.Images[imageIndex].Rating = response.data.Rating;
+                });
+                $scope.currentAlbum.Images[imageIndex].UserRating = rating;
+            };
+
             $scope.extensionFilter = function (value, index, array) {
                 for (var i = 0; i < $scope.albumExtensions.length; i++) {
                     if ($scope.albumExtensions[i].name == value.Extension) {
@@ -111,7 +119,7 @@
     .service('dataCenter', ['$http', function ($http) {
         function getAllImages() {
             var response = $http({
-                url: '/Image/GetAllImages'
+                url: '/Image/GetAll'
             });
 
             return response;
@@ -139,29 +147,37 @@
         };
 
         function deleteImage(imageId) {
+            var request = {
+                method: 'POST',
+                url: '/Image/Delete',
+                data: { imageId: imageId }
+            };
 
-                var request = {
-                    method: 'POST',
-                    url: '/Image/DeleteImage',
-                    data: { imageId: imageId }
-                };
-
-                $http(request)
-                    .then(function (response) {
-                        alert('success');
-                    },
-                    function (response) {
-                        alert('fail');
-                    });
-                
+            $http(request);
         };
+
+        function rateImage(imageId, rating) {
+            var request = {
+                method: 'POST',
+                url: '/Image/Rate',
+                data: {
+                    imageId: imageId,
+                    rating: rating
+                }
+            };
+
+            var response = $http(request);
+
+            return response;
+        }
 
         return {
             getAllImages: getAllImages,
             getAlbum: getAlbum,
             getAlbumNames: getAlbumNames,
             addImage: addImage,
-            deleteImage: deleteImage
+            deleteImage: deleteImage,
+            rateImage: rateImage
         }
     }])
 

@@ -9,13 +9,15 @@ namespace ImageBase.Mappers
 
         public static Image ToImage(this ImageEntity imageEntity)
         {
+
+            var rating = ((double)imageEntity.RatingSum / imageEntity.RatersCount).ToString("N1");
             return new Image
             {
                 Id = imageEntity.Id,
                 Name = imageEntity.Name,
                 Src = imageEntity.Src,
                 Extension = imageEntity.Extension,
-                Rating = imageEntity.Rating,
+                Rating = rating,
                 PublicationDate = imageEntity.PublicationDate.ToString(),
                 IsApproved = imageEntity.IsApproved,
                 AlbumId = imageEntity.AlbumId

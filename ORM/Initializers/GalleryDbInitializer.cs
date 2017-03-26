@@ -23,12 +23,13 @@ namespace ORM.Initializers
             {
                 new ImageEntity {
                     Album  = albums[0],
-                    Name = "White human",
+                    Name = "White hum",
                     Src = @"placeHolder.png",
                     Extension = "png",
                     IsApproved = true,
                     PublicationDate = DateTime.Now,
-                    Rating = 5
+                    RatingSum = 10,
+                    RatersCount = 3
                 },
                 new ImageEntity {
                     Album  = albums[0],
@@ -37,16 +38,18 @@ namespace ORM.Initializers
                     Extension = "png",
                     IsApproved = true,
                     PublicationDate = DateTime.Now,
-                    Rating = 6
+                    RatingSum = 9,
+                    RatersCount = 3
                 },
                 new ImageEntity {
                     Album  = albums[1],
-                    Name = "White human",
+                    Name = "White man",
                     Src = @"placeHolder.png",
                     Extension = "png",
                     IsApproved = true,
                     PublicationDate = DateTime.Now,
-                    Rating = 6
+                    RatingSum = 15,
+                    RatersCount = 3
                 },
                 new ImageEntity {
                     Album  = albums[1],
@@ -55,7 +58,8 @@ namespace ORM.Initializers
                     Extension = "jpg",
                     IsApproved = true,
                     PublicationDate = DateTime.Now,
-                    Rating = 10
+                    RatingSum = 5,
+                    RatersCount = 5
                 }
             };
 
