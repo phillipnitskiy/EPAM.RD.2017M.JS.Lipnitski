@@ -23,8 +23,8 @@
     .controller('GalleryController',
     ['$scope', 'dataCenter',
         function($scope, dataCenter) {
-            $scope.albums = [];
-            $scope.albumExtensions = [];
+            $scope.albums = {};
+            $scope.albumExtensions = {};
 
             dataCenter.getAlbumNames().then(function(response) {
                 $scope.albums = response.data;
@@ -36,18 +36,7 @@
             $scope.changeAlbum = function () {
                 dataCenter.getAlbum($scope.currentAlbum.Id).then(function (response) {
                     $scope.currentAlbum.Images = response.data;
-
-                    $scope.albumExtensions.length = 0;
-                    $scope.currentAlbum.Images.forEach(function (image) {
-                        if (!$scope.albumExtensions.filter(e => e.name === image.Extension).length > 0) {
-                            $scope.albumExtensions.push({ name: image.Extension, state: true });
-                        }
-                    });
                 });
-            };
-
-            $scope.extensionChanged = function() {
-
             };
 
             $scope.deleteImage = function (imageId) {
@@ -64,15 +53,21 @@
                 $scope.currentAlbum.Images[imageIndex].UserRating = rating;
             };
 
-            $scope.extensionFilter = function (value, index, array) {
-                for (var i = 0; i < $scope.albumExtensions.length; i++) {
-                    if ($scope.albumExtensions[i].name == value.Extension) {
-                        return true;
-                    }
-                }
-                return false;
+            $scope.getAlbumExtensions = function () {
+                return ($scope.currentAlbum.Images || []).
+                    map(function (image) { return image.Extension; }).
+                    filter(function (ext, idx, arr) { return arr.indexOf(ext) === idx; });
+            }
+
+            $scope.filterByExtension = function (image) {
+                return $scope.albumExtensions[image.Extension] || noFilter($scope.albumExtensions);
             };
 
+            function noFilter(filterObj) {
+                return Object.
+                    keys(filterObj).
+                    every(function (key) { return !filterObj[key]; });
+            }
         }
     ])
 

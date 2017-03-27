@@ -25,8 +25,8 @@
         <!--album Extensions-->
         <div class="col-md-8">
             
-            <label ng-repeat="extension in albumExtensions" class="checkbox-inline">
-                <input type="checkbox" ng-model="extension.state" ng-change="extensionChanged()" ng-checked="extension.state" value="{{extension.name}}"> {{extension.name}}
+            <label ng-repeat="extension in getAlbumExtensions()" class="checkbox-inline">
+                <input type="checkbox" ng-model="albumExtensions[extension]"/> {{extension}}
             </label>
 
         </div>
@@ -36,7 +36,7 @@
     <!--album Images-->
     <div class="row">
 
-        <div ng-repeat="image in currentAlbum.Images | filter:extensionFilter" class="gallery_item col-lg-4 col-md-4 col-sm-4 col-xs-6">
+        <div ng-repeat="image in currentAlbum.Images | filter:filterByExtension" class="gallery_item col-lg-4 col-md-4 col-sm-4 col-xs-6">
             <h4>{{image.Name}}</h4>
             <img ng-src="{{image.Src}}" class="img-responsive">
             <div class="col-md-6">{{image.PublicationDate}}</div>
