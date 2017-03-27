@@ -169,19 +169,8 @@
                 },
                 headers: { 'Accept': 'application/json' }
             }
-            $http(response).then(function (response) {
-                alert(response.data);
-            });
-            //var response = {
-            //    method: "POST",
-            //    url: "/Home/AddImage/",
-            //    data: {
-            //        imageData: imageData
-            //    }
-            //}
-            //$http(response).then(function (response) {
-            //    alert(response.data);
-            //});
+            $http(response);
+
         };
 
         function deleteImage(imageId) {
